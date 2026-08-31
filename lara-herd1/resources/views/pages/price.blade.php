@@ -29,9 +29,12 @@
                         <li>Email support</li>
                         <li>Help center access</li>
                     </ul>
-                    <button type="button" class="w-100 btn btn-lg btn-outline-primary">
+                    {{-- <button type="button" class="w-100 btn btn-lg btn-outline-primary">
                         Sign up for free
-                    </button>
+                    </button> --}}
+                    <x-btn type="button" class="w-100 btn btn-lg btn-outline-primary">
+                        Sign up for free
+                    </x-btn>
                 </div>
             </div>
         </div>
@@ -50,9 +53,12 @@
                         <li>Priority email support</li>
                         <li>Help center access</li>
                     </ul>
-                    <button type="button" class="w-100 btn btn-lg btn-primary">
+                    {{-- <button type="button" class="w-100 btn btn-lg btn-primary">
                         Get started
-                    </button>
+                    </button> --}}
+                    <x-btn type="button" class="w-100 btn-lg btn-primary">
+                         Get started
+                    </x-btn>
                 </div>
             </div>
         </div>
@@ -71,9 +77,12 @@
                         <li>Phone and email support</li>
                         <li>Help center access</li>
                     </ul>
-                    <button type="button" class="w-100 btn btn-lg btn-primary">
+                    {{-- <button type="button" class="w-100 btn btn-lg btn-primary">
                         Contact us
-                    </button>
+                    </button> --}}
+                    <x-btn type="button" class="w-100 btn-lg btn-primary" disabled>
+                         Contact us
+                    </x-btn>
                 </div>
             </div>
         </div>

@@ -17,6 +17,12 @@ Route::get('/test', function () {
 Route::get('/price', function () {
     return view('pages.price');
 })->name("price");
+
 Route::get('/plan', function () {
     return view('pages.compare-plan');
 })->name('compare-plan');
+
+Route::get('/login', function () {
+    return view('pages.auth.login');
+})->name('signin');
+

@@ -1,1 +1,2 @@
 30-08-26 -  blade template, routing
+31-08-26 -  php artisan create view, componenent, component creation
