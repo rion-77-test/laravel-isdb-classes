@@ -4,7 +4,7 @@
 @props([
     'href' => null,
 ])
-@if ($hres)
+@if ($href)
     <a {{ $attributes->merge([
         'class' => 'btn',
         'href' => $href,
