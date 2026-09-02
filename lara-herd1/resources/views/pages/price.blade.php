@@ -1,7 +1,11 @@
 @extends('layouts.app')
 
 @section('title', 'Pricing')
-
+<div>
+    <h5>Organization: {{$org}}</h5>
+    <h5>TSP: {{$tsp}}</h5>
+    <h5>Round: {{$round}}</h5>
+</div>
 
 @section('content')
     <div class="pricing-header p-3 pb-md-4 mx-auto text-center">
