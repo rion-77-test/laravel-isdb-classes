@@ -22,12 +22,12 @@
 
         <!-- Group: Components -->
         <div class="sidebar-menu-section">
-            <div class="sidebar-menu-title">Components</div>
+            <div class="sidebar-menu-title">System</div>
             <ul class="sidebar-menu-list">
                 <li class="sidebar-menu-item">
-                    <a href="tables-basic.html" class="sidebar-menu-link" id="menu-basictables" title="Basic Tables">
-                        <i class="bi bi-table"></i>
-                        <span>Basic Tables</span>
+                    <a href="{{ route('users.index') }}" class="sidebar-menu-link" id="menu-basictables" title="Basic Tables">
+                        <i class="bi bi-person"></i>
+                        <span>Users</span>
                     </a>
                 </li>
                 <li class="sidebar-menu-item">
