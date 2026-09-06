@@ -11,18 +11,21 @@
 
     <div class="card">
         <div class="card-body">
-             <div class="table-user-cell">
-                 <img src="{{ asset('assets/images/user_1.jpg') }}" alt="Eleanor Pena" class="img-fluid rounded-4"
-                     onerror="this.src='assets/images/avatar.png'" width="80">
-                 <div>
-                     <div class="h3">Eleanor Pena</div>
-                     <div class="h5 text-muted fw-normal">eleanor.pena@example.com</div>
-                 </div>
-             </div>
-             <hr>
-            <p><strong>Name:</strong> </p>
-            <p><strong>Email:</strong> </p>
-            <p><strong>Role:</strong> </p>
+            <div class="table-user-cell">
+                {{-- <img src="https://i.pravatar.cc/150?img={{ $user->id }}" alt="Eleanor Pena" class="img-fluid rounded-4"
+                     onerror="this.src='assets/images/avatar.png'" width="80"> --}}
+                <span
+                    class="table-user-avatar bg-brand-lime d-flex align-items-center justify-content-center text-lime fw-bold fs-1  p-5">{{ Str::substr($user->name, 0, 1) }}
+                </span>
+                <div>
+                    <div class="h3">{{ $user->name }}</div>
+                    <div class="h5 text-muted fw-normal">{{ $user->email }}</div>
+                </div>
+            </div>
+            <hr>
+            <p><strong>Name: {{ $user->name }}</strong> </p>
+            <p><strong>Email: {{ $user->email }}</strong> </p>
+            <p><strong>Role: {{ $user->role }}</strong> </p>
         </div>
     </div>
 @endsection

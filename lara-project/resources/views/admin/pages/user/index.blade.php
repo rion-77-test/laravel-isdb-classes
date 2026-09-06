@@ -8,6 +8,14 @@
             <i class="bi bi-plus-lg"></i> Add New
         </a>
     </x-admin.phead>
+
+    @if (session('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+
     <div class="table-card-custom">
         <!-- Header Controls -->
         <div class="table-header-control">
@@ -73,8 +81,13 @@
                                         title="View details"><i class="bi bi-eye"></i></a>
                                     <a href="{{ route('users.edit', ['id' => $item->id]) }}" class="table-btn-action"
                                         title="Edit row"><i class="bi bi-pencil"></i></a>
-                                    <a href="#" class="table-btn-action delete" title="Delete row"><i
-                                            class="bi bi-trash"></i></a>
+                                    <form action="{{ route('users.destroy', ['id' => $item->id]) }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="table-btn-action delete" title="Delete row"><i
+                                                class="bi bi-trash"></i></button>
+                                    </form>
+
                                 </div>
                             </td>
                         </tr>
@@ -85,7 +98,7 @@
         </div>
 
         <!-- Footer Controls / Pagination -->
-        <div class="table-footer-control">  
+        <div class="table-footer-control">
 
             {{ $users->links() }}
 
@@ -99,6 +112,7 @@
         .table-footer-control nav {
             width: 100%;
         }
+
         .table-footer-control nav div:last-child {
             display: flex;
             align-items: center;
