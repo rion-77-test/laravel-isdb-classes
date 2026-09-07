@@ -19,7 +19,7 @@
     <div class="card border-light shadow-sm p-4 h-100">
         <h5 class="card-title mb-4">Basic Fields</h5>
 
-        <form action="{{ route('users.update', ['id' => $user->id]) }}" method="POST">
+        <form action="{{ route('users.update', ['user' => $user->id]) }}" method="POST">
             @csrf
             @method('PUT')
             
