@@ -31,6 +31,12 @@
                     </a>
                 </li>
                 <li class="sidebar-menu-item">
+                    <a href="{{ route('products.index') }}" class="sidebar-menu-link" id="menu-basictables" title="Basic Tables">
+                        <i class="bi bi-input-cursor-text"></i>
+                        <span>Products</span>
+                    </a>
+                </li>
+                <li class="sidebar-menu-item">
                     <a href="ui-forms.html" class="sidebar-menu-link" id="menu-uiforms" title="Forms and Input">
                         <i class="bi bi-input-cursor-text"></i>
                         <span>Forms & Input</span>

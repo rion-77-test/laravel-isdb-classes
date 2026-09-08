@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Brand;
+use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -12,7 +14,10 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        $products = Product::with('category', 'brand')->orderBy('id', 'desc')->get();
+
+        // dd($products);
+        return view('admin.pages.product.index', compact('products'));
     }
 
     /**
@@ -20,7 +25,10 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        $brands = Brand::orderBy('name', 'asc')->get();
+        $categories = Category::orderBy('name', 'asc')->get();
+
+        return view('admin.pages.product.create', compact('brands', 'categories'));
     }
 
     /**
@@ -28,7 +36,50 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // dd($request->all());
+        $request->validate([
+            // 'image' => 'required|array',
+            // 'image*' => 'image|mimes:jpeg,png,jpg,svg|max:2048',
+            'name' => 'required|min:3',
+            'image' => 'image|mimes:jpeg,png,jpg,svg,webp,avif|max:500',
+        ], [
+            'name.min' => 'Who the hell has less than 3 letter in their name?',
+            'image.max' => 'Sorry! Image is too large.',
+        ]);
+
+        if ($request->hasFile('image')) {
+            $imgName = time().'.'.$request->image->extension();
+            // dd($request->image->extension());
+            $request->image->move(public_path('uploads'), $imgName);
+
+            Product::create([
+                'name' => $request->name,
+                'price' => $request->price,
+                'quantity' => $request->qty,
+                'reorder_level' => $request->reorder,
+                'description' => $request->desc,
+                'category_id' => $request->category_id,
+                'brand_id' => $request->brand_id,
+                'active' => $request->active ? 1 : 0,
+                'image' => 'uploads/'.$imgName,
+            ]);
+
+            return redirect()->route('products.index')->with('success', 'Product created successfully');
+        } else {
+            // dd('no image');
+            Product::create([
+                'name' => $request->name,
+                'price' => $request->price,
+                'quantity' => $request->qty,
+                'reorder_level' => $request->reorder,
+                'description' => $request->desc,
+                'category_id' => $request->category_id,
+                'brand_id' => $request->brand_id,
+                'active' => $request->active ? 1 : 0,
+            ]);
+
+            return redirect()->route('products.index')->with('success', 'Product created successfully');
+        }
     }
 
     /**

@@ -4,3 +4,6 @@
 02-09-26 -  controller introduction, creating new model, factory, seeder, getting data from database
 03-09-26 -  templating, resource controller
 05-09-26 -  displaying data form database ,database eloquent, joining table, pagination
+06-09-26 -  CRUD Operation
+07-09-26 -  delete modal with js, new product models
+08-09-26 -  image upload
