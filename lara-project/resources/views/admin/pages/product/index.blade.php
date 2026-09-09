@@ -162,7 +162,7 @@
                 // alert(id);
                 document.querySelector('#modalDelete .name').innerText = name;
                 document.querySelector('#modalDelete form').action =
-                    "{{ route('users.destroy', ['user' => ':id']) }}".replace(':id', id);
+                    "{{ route('products.destroy', ['product' => ':id']) }}".replace(':id', id);
             })
         })
     </script>

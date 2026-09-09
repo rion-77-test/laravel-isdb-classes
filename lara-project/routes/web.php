@@ -10,7 +10,7 @@ Route::get('/', function () {
 
 Route::get('/dashboard', function () {
     return view('admin.pages.dashboard');
-});
+})->name('dashboard');
 
 // User
 // Route::get('/users', [UserController::class, 'index'])->name('users.index');

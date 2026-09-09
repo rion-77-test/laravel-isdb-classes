@@ -1,3 +1,9 @@
+@php
+// Custom function to add active class to the current route
+    function activeLink($route_name) {
+        return request()->routeIs("$route_name") ? 'active' : "";
+    }
+@endphp
 <div class="sidebar-wrapper" id="sidebar">
     <!-- Brand Logo / Identity -->
     <a href="index.html" class="sidebar-brand">
@@ -12,7 +18,7 @@
             <div class="sidebar-menu-title">Menu</div>
             <ul class="sidebar-menu-list">
                 <li class="sidebar-menu-item">
-                    <a href="index.html" class="sidebar-menu-link active" id="menu-overview" title="Overview">
+                    <a href="{{ route('dashboard') }}" class="sidebar-menu-link  {{ activeLink('dashboard') }}" id="menu-overview" title="Overview">
                         <i class="bi bi-grid-fill"></i>
                         <span>Dashboard</span>
                     </a>
@@ -25,13 +31,13 @@
             <div class="sidebar-menu-title">System</div>
             <ul class="sidebar-menu-list">
                 <li class="sidebar-menu-item">
-                    <a href="{{ route('users.index') }}" class="sidebar-menu-link" id="menu-basictables" title="Basic Tables">
+                    <a href="{{ route('users.index') }}" class="sidebar-menu-link {{ activeLink('users*') }}" id="menu-basictables" title="Basic Tables">
                         <i class="bi bi-person"></i>
                         <span>Users</span>
                     </a>
                 </li>
                 <li class="sidebar-menu-item">
-                    <a href="{{ route('products.index') }}" class="sidebar-menu-link" id="menu-basictables" title="Basic Tables">
+                    <a href="{{ route('products.index') }}" class="sidebar-menu-link {{ activeLink('products*') }}" id="menu-basictables" title="Basic Tables">
                         <i class="bi bi-input-cursor-text"></i>
                         <span>Products</span>
                     </a>
