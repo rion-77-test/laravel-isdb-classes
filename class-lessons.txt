@@ -1,5 +1,5 @@
 30-08-26 -  blade template, routing
-31-08-26 -  php artisan create view, componenent, component creation
+31-08-26 -  php artisan create view, component, component creation
 01-09-26 -  database integration, database migrate, generating fake data for database
 02-09-26 -  controller introduction, creating new model, factory, seeder, getting data from database
 03-09-26 -  templating, resource controller
@@ -8,3 +8,4 @@
 07-09-26 -  delete modal with js, new product models
 08-09-26 -  image upload
 09-09-26 -  image upload improved
+10-09-26 -  authentication with Laravel breeze
