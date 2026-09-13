@@ -4,9 +4,11 @@
 
 @section('content')
     <x-admin.phead title="Users - Edit" subtitle="Update this information">
-        <a class="btn-custom btn-quick-action btn-custom-outline" href="{{ route('users.index') }}" type="button">
-            <i class="bi bi-arrow-left"></i> Back
-        </a>
+        @if (auth()->user()->role_id != 5)
+            <a class="btn-custom btn-quick-action btn-custom-outline" href="{{ route('users.index') }}" type="button">
+                <i class="bi bi-arrow-left"></i> Back
+            </a>
+        @endif
     </x-admin.phead>
 
     @if (session('error'))
@@ -22,7 +24,7 @@
         <form action="{{ route('users.update', ['user' => $user->id]) }}" method="POST">
             @csrf
             @method('PUT')
-            
+
             <!-- Text input -->
             <div class="mb-3">
                 <label for="basicText" class="form-label-custom">Name</label>

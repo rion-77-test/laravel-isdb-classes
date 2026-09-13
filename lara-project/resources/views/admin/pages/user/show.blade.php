@@ -4,10 +4,19 @@
 
 @section('content')
     <x-admin.phead title="Users - Details" subtitle="Show details information.">
-        <a href="{{ route('users.index') }}" class="btn-custom btn-custom-outline-secondary" type="button">
-            <i class="bi bi-arrow-left"></i> Back
-        </a>
+        @if (auth()->user()->role_id != 5)
+            <a href="{{ route('users.index') }}" class="btn-custom btn-custom-outline-secondary" type="button">
+                <i class="bi bi-arrow-left"></i> Back
+            </a>
+        @endif
     </x-admin.phead>
+
+    @if (session('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
 
     <div class="card">
         <div class="card-body">

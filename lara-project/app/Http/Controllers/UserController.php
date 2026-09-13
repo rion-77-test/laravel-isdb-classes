@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
@@ -12,8 +13,26 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      */
+    private function guestAccessDeny($id = null)
+    {
+        if ($id) {
+            if (Auth::user()->role_id == 5 && Auth::user()->id != $id) {
+                abort(403);
+                exit;
+                // return redirect()->route('users.show', Auth::user()->id);
+            }
+        } else {
+            if (Auth::user()->role_id == 5) {
+                abort(403);
+                exit;
+            }
+        }
+    }
+
     public function index()
     {
+
+        $this->guestAccessDeny();
         // $users = User::all()->orderBy('id', 'desc');
         // $users = User::orderBy('id', 'desc')->get();
         // $users = User::orderBy('name', 'asc')->get();
@@ -45,6 +64,7 @@ class UserController extends Controller
      */
     public function create()
     {
+        $this->guestAccessDeny();
         $roles = Role::orderBy('name', 'asc')->get();
 
         return view('admin.pages.user.create', compact('roles'));
@@ -55,6 +75,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+        $this->guestAccessDeny();
         // dd($request->all());
         $request->validate([
             'name' => 'required|min:3|max:100',
@@ -97,6 +118,9 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
+
+        $this->guestAccessDeny($id);
+
         $user = User::join('roles as r', 'users.role_id', '=', 'r.id')
             ->where('users.id', $id)
             ->select('users.id', 'users.name', 'users.email', 'r.name as role')
@@ -110,6 +134,8 @@ class UserController extends Controller
      */
     public function edit(string $id)
     {
+        $this->guestAccessDeny($id);
+
         $roles = Role::orderBy('name', 'asc')->get();
         $user = User::find($id);
 
@@ -122,6 +148,7 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $this->guestAccessDeny($id);
         // dd($request->all());
         $request->validate([
             'name' => 'required|min:3|max:100',
@@ -142,6 +169,12 @@ class UserController extends Controller
             ]);
 
         if ($user) {
+            if (Auth::user()->role_id == 5) {
+                return redirect()
+                    ->route('users.show', ['user' => $id])
+                    ->with('success', 'User updated successfully');
+            }
+
             return redirect()
                 ->route('users.index')
                 ->with('success', 'User updated successfully');
@@ -160,12 +193,17 @@ class UserController extends Controller
         // dd();
         // $user = User::find($id);
         // $user->delete();
+        // dd(Auth::user()->role_id);
 
-        User::destroy($id);
+        if (Auth::user()->role_id != 1 && Auth::user()->role_id != 3) {
+            abort(403);
+        } else {
+            User::destroy($id);
 
-        return redirect()
-            ->route('users.index')
-            ->with('success', 'User deleted successfully');
+            return redirect()
+                ->route('users.index')
+                ->with('success', 'User deleted successfully');
+        }
 
     }
 }

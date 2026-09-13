@@ -24,7 +24,7 @@
         </p>
 
         <div class="error-actions-group">
-            <a href="index.html" class="btn-custom btn-custom-primary">
+            <a href="{{ route('dashboard') }}" class="btn-custom btn-custom-primary">
                 <i class="bi bi-house"></i> Back to Dashboard
             </a>
         </div>
