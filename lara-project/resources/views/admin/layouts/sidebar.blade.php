@@ -67,6 +67,14 @@
                     </li>
 
                     <li class="sidebar-menu-item">
+                        <a href="{{ route('roles.index') }}" class="sidebar-menu-link {{ activeLink('roles*') }}"
+                            id="menu-basictables" title="Basic Tables">
+                            <i class="bi bi-shield"></i>
+                            <span>Roles</span>
+                        </a>
+                    </li>
+
+                    <li class="sidebar-menu-item">
                         <a href="{{ route('products.index') }}" class="sidebar-menu-link {{ activeLink('products*') }}"
                             id="menu-basictables" title="Basic Tables">
                             <i class="bi bi-input-cursor-text"></i>
@@ -120,9 +128,11 @@
     <div class="sidebar-profile">
         <img src="{{ asset('assets/images/avatar.png') }}" alt="Administrator" class="sidebar-profile-img"
             onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=256&auto=format&fit=crop'">
-        <div class="sidebar-profile-info">
-            <div class="sidebar-profile-name">Administrator</div>
-            <div class="sidebar-profile-email">admin@email.com</div>
+        {{-- <img src="{{ asset("assets/images/avatar.png") }}" alt="Administrator" class="sidebar-profile-img"
+            onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=256&auto=format&fit=crop'">
+        <div class="sidebar-profile-info"> --}}
+            <div class="sidebar-profile-name">{{ auth()->user()->name }}</div>
+            <div class="sidebar-profile-email">{{ auth()->user()->email }}</div>
         </div>
     </div>
 </div>

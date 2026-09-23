@@ -12,9 +12,29 @@
         </a>
 
         <p class="login-subtitle">Please sign in to access your dashboard</p>
-        @if(session('success'))
+        @if (session('success'))
             <p class="login-subtitle text-success">{{ session('success') }}</p>
         @endif
+
+        <div class="my-2 d-flex gap-2 flex-wrap">
+            <button class="btn-login email-change-btn" style="width: auto"type="button" data-email="editor@mail.com">
+
+                <span>Editor</span>
+            </button>
+            <button class="btn-login email-change-btn" style="width: auto"type="button" data-email="vendor@mail.com">
+                <span>Vendor</span>
+            </button>
+            <button class="btn-login email-change-btn" style="width: auto"type="button"
+                data-email="salesperson@mail.com">
+                <span>Sales Person</span>
+            </button>
+            <button class="btn-login email-change-btn" style="width: auto"type="button" data-email="guest@mail.com">
+                <span>Guest</span>
+            </button>
+            <button class="btn-login email-change-btn" style="width: auto"type="button" data-email="admin@mail.com">
+                <span>admin</span>
+            </button>
+        </div>
 
         <!-- Login Form -->
         <form action="{{ route('login.store') }}" method="POST" id="loginForm" class="needs-validation" novalidate>
@@ -82,4 +102,17 @@
         </p>
 
     </div>
+
+   
+
+@endsection
+
+@section('script')
+ <script>
+        document.querySelectorAll('.email-change-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                document.querySelector('#email').value = button.dataset.email;
+            })
+        });
+    </script>
 @endsection

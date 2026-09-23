@@ -41,6 +41,7 @@
 
     <!-- Custom Authentication interactions script -->
     <script src="{{ asset('assets/js/auth.js') }}"></script>
+    @yield('script')
 </body>
 
 </html>

@@ -10,4 +10,5 @@
 09-09-26 -  image upload improved
 10-09-26 -  authentication with Laravel breeze
 12-09-26 -  custom login and registration page, middleware, custom middleware
-13-09-26 -  role based authetication
+13-09-26 -  role based authentication
+23-09-26 -  Laravel mailer, Query Builder

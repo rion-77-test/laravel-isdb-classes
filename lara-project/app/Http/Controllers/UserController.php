@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ProfileUpdateMail;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Fluent;
 
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     private function guestAccessDeny($id = null)
     {
         if ($id) {
@@ -29,6 +29,9 @@ class UserController extends Controller
         }
     }
 
+    /**
+     * Display a listing of the resource.
+     */
     public function index()
     {
 
@@ -169,15 +172,34 @@ class UserController extends Controller
             ]);
 
         if ($user) {
+
+            $role = Role::find($request->role_id);
+            $user = User::find($id);
+
+            $userData = [
+                'id' => $user->id,
+                'name' => $user->name,
+                'email' => $user->email,
+                'role' => $role->name,
+                'updated' => $user->updated_at,
+            ];
+
+            // $userData = (object) ($userData); // Php object convertion
+            $userData = new Fluent($userData); // Laravel object convention
+            // dd($userData);
+
             if (Auth::user()->role_id == 5) {
                 return redirect()
                     ->route('users.show', ['user' => $id])
-                    ->with('success', 'User updated successfully');
+                    ->with('success', 'Your profile has been updated');
             }
+
+            Mail::to($request->email)->send(new ProfileUpdateMail($userData));
 
             return redirect()
                 ->route('users.index')
-                ->with('success', 'User updated successfully');
+                ->with('success', 'User updated successfully. A notification email has been sent to the user');
+
         } else {
             return redirect()
                 ->back()
