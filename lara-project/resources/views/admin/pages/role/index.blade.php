@@ -1,10 +1,10 @@
 @extends('admin.layouts.master')
 
-@section('title', 'Users')
-{{-- {{ print_r($users) }} --}}
+@section('title', 'Roles')
+{{-- {{ print_r($roles) }} --}}
 @section('content')
-    <x-admin.phead title="Users" subtitle="Manage Items from this this page">
-        <a class="btn-custom btn-quick-action btn-custom-secondary" href="{{ route('users.create') }}" type="button">
+    <x-admin.phead title="Roles" subtitle="Manage Items from this this page">
+        <a class="btn-custom btn-quick-action btn-custom-secondary" href="{{ route('roles.create') }}" type="button">
             <i class="bi bi-plus-lg"></i> Add New
         </a>
     </x-admin.phead>
@@ -49,17 +49,17 @@
             <table class="table-custom">
                 <thead>
                     <tr>
-                        <th>ID</th>
+                        <th>No.</th>
                         <th>Role Name</th>
                         <th class="text-center">Actions</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="tbody">
                     <!-- Row 1 -->
                     @foreach ($roles as $item)
                         <tr>
 
-                            <td>{{ $item->id }}</td>
+                            <td class="table-order-id">{{ $roles->firstItem() + $loop->index }}</td>
                             <td>
                                 {{ $item->name }}
                             </td>
@@ -67,8 +67,7 @@
 
                             <td>
                                 <div class="d-flex justify-content-center gap-1">
-                                    <a href="{{ route('roles.show', ['role' => $item->id]) }}" class="table-btn-action"
-                                        title="View details"><i class="bi bi-eye"></i></a>
+
                                     <a href="{{ route('roles.edit', ['role' => $item->id]) }}" class="table-btn-action"
                                         title="Edit row"><i class="bi bi-pencil"></i></a>
                                     <button type="submit" class="table-btn-action delete" title="Delete row"
@@ -87,59 +86,13 @@
         <!-- Footer Controls / Pagination -->
         <div class="table-footer-control">
 
-            {{-- {{ $users->links() }} --}}
+            {{ $roles->links() }}
 
         </div>
     </div>
 
 @endsection
 
-{{-- My Delete Modal --}}
-{{-- <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="modalLabel"></h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body" id="modalText">
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <form class="delete-form" action="{{ route('users.destroy', ['user' => 0]) }}" method="POST">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="btn btn-danger">Delete</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div> --}}
-
-{{-- My modal script --}}
-{{-- @section('script')
-    <script>
-        const table = document.querySelector('.table-responsive');
-        const deleteForm = document.querySelector('.delete-form');
-        const modalLabel = document.querySelector('#modalLabel');
-        const modalText = document.querySelector('#modalText');
-        console.log(deleteForm);
-
-        table.addEventListener('click', (e) => {
-            const deleteBtn = e.target.closest('.delete-btn')
-            if (!deleteBtn) return;
-            const userData = JSON.parse(deleteBtn.dataset.user);
-            const deleteRoute = deleteForm.getAttribute("action").replace("0", userData.id);
-            console.log(deleteRoute);
-            console.log(userData);
-            deleteForm.setAttribute("action", deleteRoute);
-            modalLabel.innerText = `Delete User ${userData.name}`;
-            modalText.innerText = `Do you really want delete ${userData.name}?`;
-
-        })
-    </script>
-@endsection
- --}}
 
 @section('style')
     <style>
@@ -173,7 +126,8 @@
 
 @section('script')
     <script>
-        document.querySelectorAll('.delete').forEach(button => {
+        function loadDelete() {
+             document.querySelectorAll('.delete').forEach(button => {
             button.addEventListener('click', function() {
                 let id = this.dataset.id;
                 let name = this.dataset.name;
@@ -182,8 +136,79 @@
                 // document.querySelector('#modalDelete form').setAttribute("action",  )
                 // document.querySelector('#modalDelete form').action = `users/${id}`;
                 document.querySelector('#modalDelete form').action =
-                    "{{ route('users.destroy', ['user' => ':id']) }}".replace(':id', id);
+                    "{{ route('roles.destroy', ['role' => ':id']) }}".replace(':id', id);
             })
+        })
+        }
+        loadDelete();
+    </script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.20.0/axios.min.js"></script>
+
+    <script>
+        let table = $('.table-responsive');
+        let searchInput = $('.table-search-input');
+        // console.log(table);
+        // console.log(searchInput);
+        searchInput.on('input', function() {
+            // if (searchInput.val().length > 2) {
+            //     console.log(searchInput.val())
+            // };
+
+            $.ajax({
+                url: '{{ route('roles.search') }}',
+                method: 'GET',
+                data: {
+                    search: $(this).val()
+                },
+                success: function(res) {
+                    console.log(typeof res);
+                    let rows = JSON.parse(res);
+                    let tbody = $('#tbody');
+                    let html = '';
+                    rows.forEach((item, index) => {
+                         html = html + `<tr>
+
+                            <td class="table-order-id">1</td>
+                            <td>
+                                ${item.name}
+                            </td>
+
+
+                            <td>
+                                <div class="d-flex justify-content-center gap-1">
+
+                                    <a href="{{ route('roles.edit', ['role' => '_id_']) }}" class="table-btn-action"
+                                        title="Edit row"><i class="bi bi-pencil"></i></a>
+                                    <button type="submit" class="table-btn-action delete" title="Delete row"
+                                        data-bs-toggle="modal" data-bs-target="#modalDelete" data-id="${item.id}"
+                                        data-name="${item.name}"><i class="bi bi-trash"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>`.replace('_id_', item.id)
+                    });
+                    console.log(html);
+                    console.log($('#tbody'));
+                    $('#tbody').html(html);
+                    loadDelete();
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                }
+            })
+
+            // axios.get('{{ route('roles.search') }}', {
+            //         params: {
+            //             search: searchInput.val()
+            //         }
+            //     })
+            //     .then(function(res) {
+                    
+            //     })
+            //     .catch(function(error) {
+            //         console.error(error);
+            //     });
         })
     </script>
 @endsection

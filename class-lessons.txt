@@ -12,3 +12,4 @@
 12-09-26 -  custom login and registration page, middleware, custom middleware
 13-09-26 -  role based authentication
 23-09-26 -  Laravel mailer, Query Builder
+24-09-26 -  api creation, role search filtering with jqeury ajax
