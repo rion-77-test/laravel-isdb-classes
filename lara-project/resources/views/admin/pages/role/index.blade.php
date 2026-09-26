@@ -22,7 +22,7 @@
             <!-- Search bar -->
             <div class="table-search-box">
                 <i class="bi bi-search table-search-icon"></i>
-                <input type="text" class="table-search-input" placeholder="Search orders or products...">
+                <input type="search" class="table-search-input" placeholder="Search orders or products...">
             </div>
             <!-- Action buttons / Filter options -->
             <div class="table-filter-group">
@@ -169,7 +169,7 @@
                     rows.forEach((item, index) => {
                          html = html + `<tr>
 
-                            <td class="table-order-id">1</td>
+                            <td class="table-order-id">${index + 1}</td>
                             <td>
                                 ${item.name}
                             </td>

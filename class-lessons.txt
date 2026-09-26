@@ -13,3 +13,4 @@
 13-09-26 -  role based authentication
 23-09-26 -  Laravel mailer, Query Builder
 24-09-26 -  api creation, role search filtering with jqeury ajax
+25-09-26 -  product filtering, frontend templating

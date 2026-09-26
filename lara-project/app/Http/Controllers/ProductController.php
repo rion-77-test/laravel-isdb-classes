@@ -13,12 +13,45 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::with('category', 'brand')->orderBy('id', 'desc')->get();
+        // if($request->search && $request->category_id && $request->brand_id){
+        //     dd($request->search, $request->category_id, $request->brand_id);
+        // }
 
-        // dd($products);
-        return view('admin.pages.product.index', compact('products'));
+        /* 
+        $products = Product::with('category', 'brand')->orderBy('id', 'desc')
+        ->when($request->search, function($query, $search){
+            return $query->where('name' , 'LIKE', '%' . $search . '%');
+        })
+        ->when($request->category_id, function($query, $category){
+            return $query->where('category_id' , $category);
+        })
+        ->when($request->brand_id, function($query, $brand){
+            return $query->where('brand_id' , $brand);
+        })
+        ->get(); */
+
+        $query = Product::query();
+        if ($request->search) {
+            $query->where('name', 'LIKE', "%{$request->search}$");
+        }
+        if ($request->category_id) {
+            $query->where('category_id', $request->category_id);
+        }
+        if ($request->brand_id) {
+            $query->where('brand_id', $request->brand_id);
+        }
+
+        $products = $query->with('category', 'brand')
+            ->orderBy('id', 'desc')
+            ->paginate();
+
+        $categories = Category::orderBy('name', 'asc')->get();
+        $brands = Brand::orderBy('name', 'asc')->get();    
+
+        
+        return view('admin.pages.product.index', compact('products', 'categories', 'brands'));
     }
 
     /**

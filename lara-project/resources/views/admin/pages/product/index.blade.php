@@ -19,29 +19,42 @@
     <div class="table-card-custom">
         <!-- Header Controls -->
         <div class="table-header-control">
-            <!-- Search bar -->
-            <div class="table-search-box">
-                <i class="bi bi-search table-search-icon"></i>
-                <input type="text" class="table-search-input" placeholder="Search orders or products...">
-            </div>
-            <!-- Action buttons / Filter options -->
-            <div class="table-filter-group">
-                <div class="dropdown">
-                    <button class="btn-table-action dropdown-toggle" type="button" id="dropdownFilterStatus"
-                        data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="bi bi-funnel"></i> Status Filter
-                    </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownFilterStatus">
-                        <li><a class="dropdown-item" href="#">All Statuses</a></li>
-                        <li><a class="dropdown-item" href="#">Paid / Success</a></li>
-                        <li><a class="dropdown-item" href="#">Processing</a></li>
-                        <li><a class="dropdown-item" href="#">Cancelled / Failed</a></li>
-                    </ul>
+            <form action="{{ route('products.index') }}" method="GET" class="d-flex flex-md-nowrap flex-wrap gap-2">
+                <div class="input-group">
+                    <span class="input-group-text">
+                        <i class="bi bi-search"></i>
+                    </span>
+                    <input type="search" class="form-control" placeholder="Search products..." name="search"
+                        value="{{ request('search') }}">
                 </div>
-                <button class="btn-table-action" type="button">
-                    <i class="bi bi-file-earmark-arrow-down"></i> Export
-                </button>
-            </div>
+                <div class="input-group">
+                    <label class="input-group-text"><i class="bi bi-funnel me-1"></i> Category</label>
+                    <select class="form-select" id="inputGroupSelect01" name="category_id">
+                        <option selected disabled>Choose...</option>
+                        @foreach ($categories as $item)
+                            <option value="{{ $item->id }}" @selected(request('category_id') == $item->id)>{{ $item->name }}</option>
+                        @endforeach
+
+
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label class="input-group-text"><i class="bi bi-funnel me-1"></i> Brand</label>
+                    <select class="form-select" id="inputGroupSelect01" name="brand_id">
+                        <option selected disabled>Choose...</option>
+                        @foreach ($brands as $item)
+                            <option value="{{ $item->id }}" @selected(request('brand_id') == $item->id)>{{ $item->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <!-- Action buttons / Filter options -->
+                <div class="table-filter-group">
+                    <button class="btn-table-action" type="submit">
+                        Search <i class="bi bi-arrow-right"></i>
+                    </button>
+                </div>
+                <a href="{{ route('products.index') }}" class="btn-table-action text-nowrap">Clear filter</a>
+            </form>
         </div>
 
         <!-- Responsive Table Wrapper -->
@@ -60,7 +73,7 @@
                 </thead>
                 <tbody>
                     <!-- Row 1 -->
-                    @foreach ($products as $item)
+                    @forelse ($products as $item)
                         <tr>
                             <td>
                                 <div class="d-flex align-items-center gap-3">
@@ -105,7 +118,15 @@
                                 </div>
                             </td>
                         </tr>
-                    @endforeach
+                    @empty
+                        <tr>
+                            <td colspan="7" class="text-center">No Product found that matches
+                                {{ request('search') ? 'search ' . request('search') : '' }}
+                                {{ request('category_id') && ($cat = $categories->find(request('category_id'))) ? ', category "' . $cat->name . '"' : '' }}
+                                {{ request('brand_id') && ($brand = $brands->find(request('brand_id'))) ? ', brand "' . $brand->name . '"' : '' }}
+                            </td>
+                        </tr>
+                    @endforelse
 
                 </tbody>
             </table>
