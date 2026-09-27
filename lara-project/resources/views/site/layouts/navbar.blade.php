@@ -9,7 +9,7 @@
         <a href="{{ route('home') }}" aria-current="page">Home</a>
         <a href="shop.html">Shop ▾</a>
         <a href="product.html">Products</a>
-        <a href="cart.html">Cart</a>
+        <a href="{{ route('cart') }}">Cart</a>
         <a href="contact.html">Contact</a>
       </div>
       <span class="nav-cta">UP TO <strong>60% OFF</strong> ALL ITEMS</span>

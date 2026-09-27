@@ -32,7 +32,7 @@
                 </svg>
                 <span class="count">3</span>
             </a>
-            <a href="cart.html" class="icon-btn icon-btn--cart" aria-label="Cart">
+            <a href="{{ route('cart') }}" class="icon-btn icon-btn--cart" aria-label="Cart">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M6 2l-2 5v13a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7l-2-5z" />
