@@ -102,7 +102,9 @@
                             <input type="text" value="1" inputmode="numeric" aria-label="Quantity" />
                             <button type="button" data-act="+" aria-label="Increase">+</button>
                         </div>
-                        <a href="cart.html" class="btn btn--indigo" style="flex:1; min-width:160px">Add to cart →</a>
+                        <a href="javascript:void(0)" class="btn btn--indigo" style="flex:1; min-width:160px"
+                            onclick="addToCart({{ $product->id }}, '{{ $product->name }}', {{ $product->price }}, '{{ $product->image ?? '' }}')">Add
+                            to cart →</a>
                         <a href="cart.html" class="btn btn--ink">Buy now</a>
                         <button class="icon-btn" aria-label="Add to wishlist" style="background: var(--bg)">♡</button>
                     </div>
