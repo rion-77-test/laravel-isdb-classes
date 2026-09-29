@@ -2,6 +2,14 @@
 
 @section('title', 'Cart')
 
+@section('style')
+    <style>
+        .checkout-form {
+            display: none;
+        }
+    </style>
+@endsection
+
 @section('content')
     <main id="main">
 
@@ -34,6 +42,40 @@
                                     <button data-act="+" aria-label="Increase">+</button>
                                 </div>
                                 <span class="subtotal">$280</span>
+                                <button class="remove" aria-label="Remove">✕</button>
+                            </article>
+
+                            <article class="cart-row">
+                                <div class="pic"><img
+                                        src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=200&amp;q=80&amp;auto=format&amp;fit=crop"
+                                        alt=""></div>
+                                <div class="info">
+                                    <div class="name">Apple Watch Series 9</div>
+                                    <div class="variant">41mm · Midnight aluminum · Sport band M/L</div>
+                                </div>
+                                <div class="qty">
+                                    <button data-act="-" aria-label="Decrease">−</button>
+                                    <input type="text" value="1" inputmode="numeric" aria-label="Quantity">
+                                    <button data-act="+" aria-label="Increase">+</button>
+                                </div>
+                                <span class="subtotal">$680</span>
+                                <button class="remove" aria-label="Remove">✕</button>
+                            </article>
+
+                            <article class="cart-row">
+                                <div class="pic"><img
+                                        src="https://images.unsplash.com/photo-1606220945770-b5b6c2c55bf1?w=200&amp;q=80&amp;auto=format&amp;fit=crop"
+                                        alt=""></div>
+                                <div class="info">
+                                    <div class="name">Beats Studio Buds Pro</div>
+                                    <div class="variant">Black · Active noise cancelling</div>
+                                </div>
+                                <div class="qty">
+                                    <button data-act="-" aria-label="Decrease">−</button>
+                                    <input type="text" value="2" inputmode="numeric" aria-label="Quantity">
+                                    <button data-act="+" aria-label="Increase">+</button>
+                                </div>
+                                <span class="subtotal">$560</span>
                                 <button class="remove" aria-label="Remove">✕</button>
                             </article>
                         </div>
@@ -90,26 +132,54 @@
                     <aside class="cart-summary">
                         <h3>Order summary</h3>
 
-                        <div class="promo-input">
-                            <input type="text" placeholder="Promo code">
-                            <button>Apply</button>
-                        </div>
+                        {{-- <div class="promo-input">
+              <input type="text" placeholder="Promo code">
+              <button>Apply</button>
+            </div> --}}
 
-                        <div class="cart-line"><span>Subtotal · 3 items</span><span
-                                style="font-family:var(--ff-display); font-weight:600; color:var(--ink)">$1,520.00</span>
-                        </div>
-                        <div class="cart-line"><span>Shipping</span><span
-                                style="color: var(--emerald); font-weight: 600">Free</span></div>
+                        <div class="cart-line"><span>Subtotal</span><span
+                                style="font-family:var(--ff-display); font-weight:600; color:var(--ink)"
+                                id="subtotal">$00</span></div>
+                        <div class="cart-line"><span>Shipping</span><span style="color: var(--emerald); font-weight: 600"
+                                id='shippingCost'>Free</span></div>
                         <div class="cart-line"><span>Estimated tax</span><span
-                                style="font-family:var(--ff-display); font-weight:600; color:var(--ink)">$121.60</span>
-                        </div>
-                        <div class="cart-line"><span>Promo · WELCOME20</span><span
-                                style="color: var(--rose); font-family:var(--ff-display); font-weight:600">−$56.00</span>
-                        </div>
+                                style="font-family:var(--ff-display); font-weight:600; color:var(--ink)"
+                                id="tax">$00</span></div>
+                        {{-- <div class="cart-line"><span>Promo · WELCOME20</span><span style="color: var(--rose); font-family:var(--ff-display); font-weight:600">−$56.00</span></div> --}}
 
-                        <div class="cart-line is-total"><span>Total</span><span>$1,585.60</span></div>
+                        <div class="cart-line is-total"><span>Total</span><span id="total">$0</span></div>
 
-                        <a href="#" class="btn btn--indigo btn--block">Proceed to checkout →</a>
+                        <a href="javascript:;" class="btn-proceed btn btn--indigo btn--block">Proceed to checkout →</a>
+
+                        <form action="{{ route('orders.store') }}" method="POST" class="checkout-form">
+                            @csrf
+                            <div class="field-row">
+                                <div class="field">
+                                    <label for="c-first">Name</label>
+                                    <input id="c-first" type="text" name="name" required=""
+                                        placeholder="Mira">
+                                </div>
+                                <div class="field">
+                                    <label for="c-last">Phone</label>
+                                    <input id="c-last" type="tel" name="phone" required=""
+                                        placeholder="0151 123 456">
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label for="c-topic">Choose a payment method</label>
+                                <select id="c-topic" name="payment_method">
+                                    <option value="1">Cash on delivery</option>
+                                    <option value="2" disabled>bKash</option>
+                                    <option value="3" disabled>Visa / Mastercard</option>
+                                </select>
+                            </div>
+                            <div class="field">
+                                <label for="c-msg">Shipping Address</label>
+                                <textarea name="shipping_address" id="c-msg" required="" placeholder="12 Mothijheel, Dhaka-100"></textarea>
+                            </div>
+                            <input type="hidden" name="items" value="">
+                            <button type="submit" class="btn btn--indigo btn--block">Order Now →</button>
+                        </form>
 
                         <div
                             style="display: flex; justify-content: center; gap: var(--s3); margin-top: var(--s5); flex-wrap: wrap">
@@ -136,57 +206,80 @@
         </section>
 
     </main>
+
 @endsection
+
 
 @section('script')
     <script>
+        // Cart
+        // ======================
+
         let cartList = document.querySelector('.cart-list');
 
         function printCart() {
             var list = cart.getCart();
+            document.querySelector('.checkout-form input[name="items"]').value = JSON.stringify(list);
             var html = '';
+            var subtotal = 0;
             list.forEach(item => {
-                let img = item.img ? "{{ asset(':img') }}".replace(':img', item.img) :
-                    "https://placehold.net/400x400.png";
+
+                // img = item.img ? "{{ asset(':img') }}".replace(':img', item.img) :  'https://placehold.net/400x400.png';
+                img = item.img ? item.img : 'https://placehold.net/400x400.png';
                 html += `
-          <article class="cart-row">
-                                <div class="pic"><img
-                                        src="${img}"
-                                        alt=""></div>
-                                <div class="info">
-                                    <div class="name">${item.name}</div>
-                                    <div class="variant">$${item.price}</div>
-                                </div>
-                                <div class="qty">
-                                    <button data-act="-" aria-label="Decrease" onclick="decreaseQty(${item.id})">−</button>
-                                    <input type="text" value="${item.quantity}" inputmode="numeric" aria-label="Quantity">
-                                    <button data-act="+" aria-label="Increase" onclick="increaseQty(${item.id})">+</button>
-                                </div>
-                                <span class="subtotal">$${item.price * item.quantity}</span>
-                                <button class="remove" aria-label="Remove" onclick="removeFromCart(${item.id})">✕</button>
-                            </article>
-          `;
+                <article class="cart-row">
+                    <div class="pic"><img src="${img}" alt=""></div>
+                    <div class="info">
+                    <div class="name">${item.name}</div>
+                    <div class="variant">$${item.price.toFixed(2)}</div>
+                    </div>
+                    <div class="qty">
+
+                    <button data-act="-" aria-label="Decrease" onclick="decreaseQty(${item.id}")>−</button>
+
+                    <input type="text" value="${item.quantity}" inputmode="numeric" aria-label="Quantity">
+                    
+                    <button data-act="+" aria-label="Increase" onclick="increaseQty(${item.id})">+</button>
+                    </div>
+
+                    <span class="subtotal">$${(item.price * item.quantity).toFixed(2)}</span>
+                    <button class="remove" aria-label="Remove" onclick="removeFromCart(${item.id})">✕</button>
+                </article>
+            `;
+                subtotal += parseFloat(item.price * item.quantity);
+
             });
             cartList.innerHTML = html;
+            document.querySelector('#subtotal').innerText = `$${subtotal.toFixed(2)}`;
+            document.querySelector('#shippingCost').innerText = `$${(subtotal ? 30 : 0).toFixed(2)}`;
+            document.querySelector('#tax').innerText = `$${(subtotal * .05).toFixed(2)}`;
+            document.querySelector('#total').innerText =
+                `$${(subtotal + (subtotal ? 30 : 0) + (subtotal * .05)).toFixed(2)}`;
+        }
+        printCart();
+
+        function increaseQty(id) {
+            cart.increaseQuantity(id);
+            printCart();
         }
 
-        printCart();
+        function decreaseQty(id) {
+            cart.decreaseQuantity(id);
+            printCart();
+            printItemsNumber();
+        }
 
         function removeFromCart(id) {
             cart.removeItem(id);
             printCart();
-            printItemsNumber(); 
+            printItemsNumber();
         }
 
-        function increaseQty(id) {
-          cart.increaseQuantity(id);
-          printCart();
-          printItemsNumber(); 
-        }
-        function decreaseQty(id) {
-          cart.decreaseQuantity(id);
-          printCart();
-          printItemsNumber(); 
-        }
+        // Order Form
+        // ======================
+        document.querySelector('.btn-proceed').addEventListener('click', function() {
+            document.querySelector('.checkout-form').style.display = 'block';
+            this.style.display = "none";
+        })
     </script>
 @endsection
