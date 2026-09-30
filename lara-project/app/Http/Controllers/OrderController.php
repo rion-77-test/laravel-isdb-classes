@@ -47,6 +47,7 @@ class OrderController extends Controller
               'quantity' => $item->quantity
             ]);
         }
+        return redirect()->route('cart')->with('success', 'Your order has been placed');
     }
 
     /**

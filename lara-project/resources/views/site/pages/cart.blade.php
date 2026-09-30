@@ -18,7 +18,21 @@
                 <div class="crumbs"><a href="index.html">Home</a> <span class="sep">›</span> <span>Shopping cart</span>
                 </div>
                 <h1>Your cart</h1>
-                <p>3 items · ready to ship. Free delivery on this order. Estimated arrival 21 – 23 May.</p>
+                <p>Ready to ship. Free delivery on this order. Estimated arrival 21 – 23 May.</p>
+                @if (session('success'))
+                    <div
+                        style="margin-top: var(--s7); padding: var(--s6); background: linear-gradient(135deg, var(--indigo), var(--card-purple)); color: var(--paper); border-radius: var(--r-lg); position: relative; overflow: hidden">
+                        <div
+                            style="position: absolute; inset: 0; background-image: radial-gradient(circle at 80% 20%, rgba(255,255,255,0.18) 0, transparent 40%); pointer-events: none">
+                        </div>
+                        <div style="position: relative">
+                            <h5 style="color: var(--paper); font-size: var(--text-xl); margin-bottom: var(--s3)">
+                                {{ session('success') }}
+                            </h5>
+                            <a href="/" class="btn btn--paper">Continue Shopping →</a>
+                        </div>
+                    </div>
+                @endif
             </div>
         </section>
 
@@ -211,6 +225,11 @@
 
 
 @section('script')
+    @if (session('success'))
+        <script>
+            cart.emptyCart();
+        </script>
+    @endif
     <script>
         // Cart
         // ======================

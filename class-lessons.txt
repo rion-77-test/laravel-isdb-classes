@@ -16,4 +16,5 @@
 25-09-26 -  product filtering, frontend templating
 27-09-26 -  dynamic homepage
 28-09-26 -  cart page with javascript
-29-09-26 -  order fucntionality
+29-09-26 -  order functionality
+30-09-26 -  payment method implementation
