@@ -18,3 +18,4 @@
 28-09-26 -  cart page with javascript
 29-09-26 -  order functionality
 30-09-26 -  payment method implementation
+04-10-26 -  Laravel Rest API
