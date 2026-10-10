@@ -49,7 +49,8 @@ class RoleController extends Controller
         
         $roles = DB::table('roles')->orderBy('name','asc')->paginate();
         // dd($roles);
-        return view('admin.pages.role.index', ['roles' => $roles]);
+        // return view('admin.pages.role.index', ['roles' => $roles]);
+        return response()->json($roles);
     }    
 
     /**

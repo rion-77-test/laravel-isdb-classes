@@ -19,3 +19,4 @@
 29-09-26 -  order functionality
 30-09-26 -  payment method implementation
 04-10-26 -  Laravel Rest API
+10-10-26 -  user registration and login via api
